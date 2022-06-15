@@ -14,11 +14,6 @@ class UI:
         for x in self.active_buttons:
             self.active_surface.blit(x[1], x[0])
 
-    def resolve_click(self, mouse_pos):
-        for x in self.active_buttons:
-            if x.collidepoint(mouse_pos):
-                x.was_clicked(x[2])
-
 
 class PauseMenu(UI):
     def __init__(self, screen):
@@ -38,10 +33,12 @@ class PauseMenu(UI):
     def set_active(self):
         self.active_surface = self.pause_menu_surface
         self.active_buttons.clear()
-        self.active_buttons.append({self.exit_button_rect, self.button_surface, 'exit'})
+        self.active_buttons.append([self.exit_button_rect, self.button_surface])
 
-    def was_clicked(self, action):
-        if action == 'exit':
+    def was_clicked(self, button):
+        if button == self.active_buttons[0]:
             pygame.event.post(self.QUIT_EVENT)
 
-
+    def resolve_click(self, mouse_pos):
+        if self.exit_button_rect.collidepoint(mouse_pos):
+            pygame.event.post(self.QUIT_EVENT)

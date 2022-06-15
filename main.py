@@ -40,5 +40,6 @@ while True:
 
     if paused:
         interface.draw()
+        interface.set_active()
     pygame.display.flip()
     clock.tick(60)
